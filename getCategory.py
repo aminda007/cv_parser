@@ -45,7 +45,7 @@ def softwareScore(resume, csWords = None):
     for i in range(len(csKeyWords)):
         csWordScore.append(0)
         if csKeyWords[i].lower() in (resume.lower()) != -1:
-            (csWordScore[i]) += 1
+            csWordScore[i] += 1
 
     csScore = min((float)(sum(csWordScore)+10) / (len(csKeyWords)),1.0) * 25.0
 
@@ -68,7 +68,7 @@ def engineeringScore(resume, engWords = None):
     for i in range(len(engineeringKeyWords)):
         engWordScore.append(0)
         if engineeringKeyWords[i].lower() in (resume.lower()) != -1:
-            (engWordScore[i]) += 1
+            engWordScore[i] += 1
 
     engScore = min((float)(sum(engWordScore)+10) / len(engineeringKeyWords),1.0) * 25.0
 
@@ -93,7 +93,7 @@ def financeScore(resume, finWords = None):
     for i in range(len(financeKeyWords)):
         finWordScore.append(0)
         if financeKeyWords[i].lower() in (resume.lower()) != -1:
-            (finWordScore[i]) += 1
+            finWordScore[i] += 1
 
     finScore = min((float)(sum(finWordScore)+10) / len(financeKeyWords), 1.0) * 25.0
 
@@ -115,7 +115,7 @@ def managementScore(resume, manWords = None):
     for i in range(len(managementKeyWords)):
         manWordScore.append(0)
         if managementKeyWords[i].lower() in (resume.lower()) != -1:
-            (manWordScore[i]) += 1
+            manWordScore[i] += 1
 
     manScore = min((float)(sum(manWordScore)+10) / len(managementKeyWords),1.0) * 25.0
 
@@ -136,7 +136,7 @@ def artsScore(resume, artWords = None):
     for i in range(len(artsKeyWords)):
         artsWordScore.append(0)
         if artsKeyWords[i].lower() in (resume.lower()) != -1:
-            (artsWordScore[i]) += 1
+            artsWordScore[i] += 1
 
     artsScore = min((float)(sum(artsWordScore)+10) / len(artsKeyWords), 1.0) * 25.0
 
@@ -170,7 +170,7 @@ def mainCategoryAndScore(resume, progWords = None, csWords = None, engWords = No
             maxIndex = x
             maxScore = b[x]
 
-    c = zip(a,b)
+    c = list(zip(a,b))
 
     return c[maxIndex]
 

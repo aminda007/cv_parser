@@ -18,17 +18,17 @@ def init():
     ############################################################
 
     # input the file name
-    filename = raw_input("Enter the name of a resume file or \
+    filename = input("Enter the name of a resume file or \
 directory containing resumes: \n")
 
     cats = ["Programming Languages", "Computer Science", "Engineering", "Finance", "Business Management", "the Arts"]
     for i in range(len(cats)):
-        path = raw_input("Please type the name of a file containing all keywords associated with "+ cats[i] + ' separated by line\n\
+        path = input("Please type the name of a file containing all keywords associated with "+ cats[i] + ' separated by line\n\
 (leave blank for defaults)\n')
         if(path == ""):
             cats[i] = None
         else:
-            with open(path, "r") as fin:
+            with open(path, "rt") as fin:
                 cats[i] = fin.read().splitlines()
     
     # creates an empty tex file with the results in it
@@ -130,8 +130,6 @@ def gpaScore(word_tokens):
         fout.write("\\textbf{GPA: " + str(gpa) +"}\\\\\n")
     fout.close()
     return score
-
-    
 
 def collegeScore(word_tokens):
     university = ["Carnegie Mellon University", "Princeton University",
@@ -243,7 +241,7 @@ def wordCountScore(tokens):
 
 def degreeScore(word_tokens):
     score = 10
-    desiredDegree = raw_input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
+    desiredDegree = input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
     word_tokens_lower = [x.lower() for x in word_tokens]
     # searches for similar words
     degree = difflib.get_close_matches(desiredDegree.lower(), word_tokens_lower)
@@ -258,9 +256,9 @@ def degreeScore(word_tokens):
     stop_search = False
     while (not stop_search):
         if degree == [] and close_match_fail == False: 
-            answer2 = raw_input("There are no matches. Search again? (Y/N) \n")
+            answer2 = input("There are no matches. Search again? (Y/N) \n")
             if answer2 == "Y" or answer2 == "y" or answer2 == "yes" or answer2 == "Yes":
-                desiredDegree = raw_input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
+                desiredDegree = input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
                 degree = difflib.get_close_matches(desiredDegree.lower(), word_tokens_lower)
             else:
                 stop_search = True
@@ -277,9 +275,9 @@ def degreeScore(word_tokens):
     close_match = ""
     stop_search = False
     while (not stop_search):
-        answer1 = raw_input("Would you like to search for another degree? (Y/N)\n")
+        answer1 = input("Would you like to search for another degree? (Y/N)\n")
         if answer1 == "Y" or answer1 == "y" or answer1 == "yes" or answer1 == "Yes":
-            desiredDegree = raw_input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
+            desiredDegree = input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
             degree = difflib.get_close_matches(desiredDegree.lower(), word_tokens_lower)
             if degree == []:
                 for word in word_tokens_lower:
@@ -288,9 +286,9 @@ def degreeScore(word_tokens):
                         close_match = word
                         break
             if degree == [] and close_match_fail == False:
-                answer3 = raw_input("There are no matches. Search again? (Y/N) \n")
+                answer3 = input("There are no matches. Search again? (Y/N) \n")
                 if answer3 == "Y" or answer3 == "y" or answer3 == "yes" or answer3 == "Yes":
-                    desiredDegree = raw_input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
+                    desiredDegree = input("Degree level needed (i.e. 'phd', 'ba', 'bachelor'): ")
                     degree = difflib.get_close_matches(desiredDegree.lower(), word_tokens_lower)
                 else:
                     stop_search = True
@@ -304,7 +302,7 @@ def degreeScore(word_tokens):
         else:
             stop_search = True
     degreeFound = False
-    answer4 = raw_input("Would you like to search the word 'degree'? (Y/N) \n")
+    answer4 = input("Would you like to search the word 'degree'? (Y/N) \n")
     if answer4 == "Y" or answer4 == "y" or answer4 == "yes" or answer4 == "Yes":
         print("Searching 'degree' and returning adjacent words...") 
         for word in word_tokens_lower:
@@ -338,7 +336,7 @@ def degreeScore(word_tokens):
             print("The word 'degree' does not appear in the resume.")
     else:
         pass
-    answer = raw_input("Did you find the degree you were looking for? (Y/N)\n")
+    answer = input("Did you find the degree you were looking for? (Y/N)\n")
     # yes if desired degree found else degree not attained or present
     if answer == "yes" or answer == "Y" or answer == "y" or answer == "Yes": score -= 0
     else: score -= 10
@@ -407,7 +405,7 @@ def main(resume, cats):
     # sectional score
     section_score = sectionScore(resume)
 
-    print "Finished parsing."
+    print ("Finished parsing.")
     score = category_score + overall_score + programming_score + \
             gpa_score + college_score + word_count_score + \
             degree_score + section_score
@@ -429,14 +427,15 @@ def readFile(filename, mode="rt"):
 
 if type(resume) == list:
     for i in range(len(resume)):
-        print main(resume[i], cats)
+        print(main(resume[i], cats))
     fout = open("results.tex", "a")
     fout.write("\\end{document}")
     fout.close()
     subprocess.call('pdflatex results.tex')
 elif resume != "":
-    print main(resume, cats)
+    print(main(resume, cats))
     fout = open("results.tex", "a")
     fout.write("\\end{document}")
     fout.close()
-    subprocess.call('pdflatex results.tex')
+    os.system('pdflatex results.tex')
+    # subprocess.call('pdflatex results.tex')
