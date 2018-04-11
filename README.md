@@ -4,8 +4,8 @@ Analyze, score and rank a collection of PDF resumes using machine learning
 Merit | Edge Resume Parser and Scorer
 
 To use:
-- Must have Latex installed!
-- Download the pdfquery wrapper (.tar file included in repo)
+- Must have Latex installed! https://miktex.org/2.9/setup
+- Download the pdfquery --> pip install pdfquery
 
 Our resume parser and scorer use these components to create a Latex .pdf file of results:
 - Category score (what field your resume seems best suited for)
@@ -19,3 +19,5 @@ Our resume parser and scorer use these components to create a Latex .pdf file of
 By running this program, you will be able to produce a Latex file with these results filed by resume email and will also have a total score at the bottom.
 
 Created by: Sara Adkins, Ashley Wong, Jonathan Merrin, Nazli Uzgur for YHacks 2015
+
+Edited in April 2018 to work in python 3.6
